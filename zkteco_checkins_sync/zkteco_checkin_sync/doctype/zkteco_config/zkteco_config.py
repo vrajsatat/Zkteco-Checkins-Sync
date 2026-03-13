@@ -23,7 +23,9 @@ def register_api_token():
     server_ip = frappe.db.get_single_value("ZKTeco Config", "server_ip")
     server_port = frappe.db.get_single_value("ZKTeco Config", "server_port")
     username = frappe.db.get_single_value("ZKTeco Config", "username")
-    password = frappe.db.get_single_value("ZKTeco Config", "password")
+    config = frappe.get_single("ZKTeco Config")
+    password = config.get_password("password", raise_exception=False)
+
 
     # Debug logs
     frappe.logger().error({
