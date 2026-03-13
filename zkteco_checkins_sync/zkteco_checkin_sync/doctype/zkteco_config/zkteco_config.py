@@ -25,6 +25,14 @@ def register_api_token():
     username = frappe.db.get_single_value("ZKTeco Config", "username")
     password = frappe.db.get_single_value("ZKTeco Config", "password")
 
+    # Debug logs
+    frappe.logger().error({
+        "server_ip": server_ip,
+        "server_port": server_port,
+        "username": username,
+        "password": password
+    })
+
     if not all([server_ip, server_port, username, password]):
         frappe.throw(_("Please configure server IP, port, username, and password in ZKTeco Config."))
 
@@ -36,12 +44,8 @@ def register_api_token():
         "password": password
     }
 
-    headers = {
-        "Content-Type": "application/json"
-    }
-
     try:
-        resp = requests.post(url, json=payload, headers=headers, timeout=30)
+        resp = requests.post(url, json=payload, timeout=30)
         resp.raise_for_status()
 
         data = resp.json()
