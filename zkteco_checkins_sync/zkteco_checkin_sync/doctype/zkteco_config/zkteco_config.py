@@ -80,6 +80,11 @@ def test_connection():
     start_time = f"{day} 00:00:00"
     end_time = f"{day} 23:59:59"
 
+    # Debug logs
+    frappe.logger().error({
+        "token": token
+    })
+
     headers = {
         "Content-Type": "application/json",
         "Authorization": f"Bearer {token}",
@@ -92,6 +97,10 @@ def test_connection():
     try:
         resp = requests.get(base_url, headers=headers, params=params, timeout=15)
         
+        frappe.logger().error({
+            "resp": resp
+        })
+
         if resp.ok:
             try:
                 data = resp.json()
