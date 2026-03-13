@@ -87,7 +87,7 @@ def test_connection():
 
     headers = {
         "Content-Type": "application/json",
-        "Authorization": f"Bearer {token}",
+        "Authorization": f"Token {token}",
     }
     params = {
         "start_time": start_time,
